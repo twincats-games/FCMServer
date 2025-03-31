@@ -32,5 +32,9 @@ class StatusUpdateRequest(BaseModel):
     user_id: int
 
 
+class GetStatusRequest(BaseModel):
+    file_paths: List[str] # Support multiple files
+
+
 class StatusResponse(BaseModel):
     file_statuses: Dict[str, Dict[str, str]]  # File path → {user_id, status}

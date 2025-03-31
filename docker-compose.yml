@@ -11,7 +11,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
-      - "9432:9432"
+      - "5432:5432"
 
   api:
     build: .
@@ -19,14 +19,14 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: "postgresql://user:password@db:9432/fcm_db"
+      DATABASE_URL: "postgresql://user:password@db:5432/fcm_db"
       SECRET_KEY: "your-secret-key"
       ACCESS_TOKEN_EXPIRE_MINUTES: 60
       RATE_LIMIT_MAX_REQUESTS: 5
       RATE_LIMIT_WINDOW_SECONDS: 1
       ALLOWED_HOSTS: "https://your-host.com"
     ports:
-      - "9101:9101"
+      - "8000:8000"
 
 volumes:
   db_data:

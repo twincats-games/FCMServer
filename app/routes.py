@@ -4,7 +4,7 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from app.config import RATE_LIMIT_MAX_REQUESTS, RATE_LIMIT_WINDOW_SECONDS
 from app.database import get_db
-from app.models import StatusUpdateRequest, StatusResponse
+from app.models import StatusUpdateRequest, GetStatusRequest, StatusResponse
 from app.utils.authentication import authenticate
 from app.utils.routes import atomic_checkout, atomic_release, get_files_status
 
@@ -32,7 +32,7 @@ def checkout_files(request: StatusUpdateRequest, db: Session = Depends(get_db)):
             response_model=StatusResponse,
             dependencies=[Depends(limiter.limit(f"{allowed_requests_per_second}/second")),
                           Depends(authenticate)])
-def check_files_status(request: StatusUpdateRequest, db: Session = Depends(get_db)):
+def check_files_status(request: GetStatusRequest, db: Session = Depends(get_db)):
     return get_files_status(db, request.file_paths)
 
 

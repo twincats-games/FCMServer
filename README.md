@@ -11,6 +11,10 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
   - [Features](#features)
   - [Requirements](#requirements)
   - [Setup \& Installation](#setup--installation)
+      - [1. **Clone the repository**:](#1-clone-the-repository)
+      - [2. **Install dependencies**:](#2-install-dependencies)
+      - [3. **Configure the environment variables**:](#3-configure-the-environment-variables)
+      - [4. **Run the application**:](#4-run-the-application)
   - [Environment Variables](#environment-variables)
   - [API Endpoints](#api-endpoints)
     - [1. **Checkout File**](#1-checkout-file)
@@ -25,7 +29,6 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
   - [Testing \& Swagger UI](#testing--swagger-ui)
   - [Contributing](#contributing)
   - [License](#license)
-    - [**Key Sections:**](#key-sections)
 
 ## Features
 
@@ -43,14 +46,14 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
 
 ## Setup & Installation
 
-1. **Clone the repository**:
+#### 1. **Clone the repository**:
 
    ```bash
    git clone https://github.com/twincats-games/FCMServer.git
    cd fcm-server
    ```
 
-2. **Install dependencies**:
+#### 2. **Install dependencies**:
 
    It is recommended to use a virtual environment.
 
@@ -60,7 +63,7 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
    pip install -r requirements.txt
    ```
 
-3. **Configure the environment variables**:
+#### 3. **Configure the environment variables**:
 
    You need to set environment variables for the application to work. Create a `.env` file at the root of the project and add the following:
 
@@ -73,7 +76,7 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
    ALLOWED_HOSTS=https://services-twincats.ddns.net
    ```
 
-4. **Run the application**:
+#### 4. **Run the application**:
 
    You can start the server using `uvicorn` for local development:
 
@@ -106,6 +109,15 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
      "user_id": 123
    }
    ```
+   - **Response**:
+   ```json
+   {
+     "path/to/file1.txt": {
+       "user_id": 123,
+       "status": "CHECKED_OUT"
+     }
+   }
+   ```
 
 ### 2. **Checkout Multiple Files**
 
@@ -115,6 +127,19 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
    {
      "file_paths": ["path/to/file1.txt", "path/to/file2.txt"],
      "user_id": 123
+   }
+   ```
+- **Response**:
+   ```json
+   {
+     "path/to/file1.txt": {
+       "user_id": 123,
+       "status": "CHECKED_OUT"
+     },
+     "path/to/file2.txt": {
+       "user_id": 123,
+       "status": "CHECKED_OUT"
+     }
    }
    ```
 
@@ -143,7 +168,12 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
 ### 5. **Get File Status**
 
 - **GET** `/api/v1/status`
-- **Query Parameters**: `file_path`
+- **Body**:
+   ```json
+   {
+     "file_path": ["path/to/file.txt"],
+   }
+   ```
 - **Response**:
    ```json
    {
@@ -156,7 +186,12 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
 ### 6. **Get Multiple File Status**
 
 - **GET** `/api/v1/status`
-- **Query Parameters**: `file_paths=path/to/file1.txt,path/to/file2.txt`
+- **Body**:
+   ```json
+   {
+     "file_path": ["path/to/file1.txt", "path/to/file2.txt"],
+   }
+   ```
 - **Response**:
    ```json
    {
@@ -220,15 +255,3 @@ Feel free to open issues or create pull requests for improvements or bug fixes!
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
-
-### **Key Sections:**
-- **Setup & Installation**: Guides users through cloning, installing dependencies, and running the app.
-- **Environment Variables**: Lists all the necessary environment variables with their default values.
-- **API Endpoints**: Provides details on the available endpoints, the request format, and responses.
-- **Security & Rate Limiting**: Explains the implemented safety measures, such as JWT authentication and rate limiting.
-- **Logging**: Describes the logging configuration for rotating logs and keeping logs within a manageable size.
-- **Docker Setup**: Instructions for building and running the app in a Docker container.
-- **Testing & Swagger UI**: Explains how to access the Swagger UI to test the API.
-
-Let me know if you'd like to add anything else to the README!
