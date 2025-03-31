@@ -1,0 +1,32 @@
+﻿version: "3.8"
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fcm_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "9432:9432"
+
+  api:
+    build: .
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://user:password@db:9432/fcm_db"
+      SECRET_KEY: "your-secret-key"
+      ACCESS_TOKEN_EXPIRE_MINUTES: 60
+      RATE_LIMIT_MAX_REQUESTS: 5
+      RATE_LIMIT_WINDOW_SECONDS: 1
+      ALLOWED_HOSTS: "https://your-host.com"
+    ports:
+      - "9101:9101"
+
+volumes:
+  db_data:
