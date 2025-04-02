@@ -73,7 +73,7 @@ This service is implemented using **FastAPI**, **SQLAlchemy** for database inter
    ACCESS_TOKEN_EXPIRE_MINUTES=60
    RATE_LIMIT_MAX_REQUESTS=100
    RATE_LIMIT_WINDOW_SECONDS=60
-   ALLOWED_HOSTS=https://services-twincats.ddns.net
+   ALLOWED_HOSTS=https://your-host.com
    ```
 
 #### 4. **Run the application**:
